@@ -29,7 +29,6 @@ def honest_calculator():
 
             check(x, y, oper)
 
-
             if oper == "+":
                 result = x + y
             elif oper == "-":
