@@ -6,11 +6,14 @@ def honest_calculator():
     MSG_3 = "Yeah, division by zero. Smart move..."
     MSG_4 = "Do you want to store the result? (y / n):"
     MSG_5 = "Do you want to continue calculations? (y / n):"
+    MSG_10 = "Are you sure? It is only one digit! (y / n)"
+    MSG_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+    MSG_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
 
     memory = 0.0
-    result = "y"
+    response = "y"
 
-    while result == "y":
+    while response == "y":
 
         print(MSG_0)
         equation = input()
@@ -38,7 +41,7 @@ def honest_calculator():
             elif oper == "/":
                 if x == 0 or y == 0:
                     raise ZeroDivisionError
-                result = x * y
+                result = x / y
 
             else:
                 raise SyntaxError
@@ -50,13 +53,31 @@ def honest_calculator():
             answer_1 = input()
 
             if answer_1 == "y":
-                memory = result
+                if is_one_digit(result) is True:
+                    print(MSG_10)
+
+                    answer_3 = input()
+
+                    if answer_3 == 'y':
+                        print(MSG_11)
+
+                        answer_4 = input()
+
+                        if answer_4 == 'y':
+                            print(MSG_12)
+
+                            answer_5 = input()
+
+                            if answer_5 == 'y':
+                                memory = result
+                else:
+                    memory = result
 
             print(MSG_5)
 
             answer_2 = input()
 
-            result = answer_2
+            response = answer_2
 
         except (TypeError, ValueError):
             print(MSG_1)
