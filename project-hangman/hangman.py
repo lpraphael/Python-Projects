@@ -24,6 +24,11 @@ def hangman():
         print(player_word)
         letter = input("Input a letter: ")
 
+        if letter in player_word:
+            print("No improvements.")
+            attempts -= 1
+            continue
+
         player_word = list(player_word)
 
         for i in range(len(secret_word)):
@@ -32,21 +37,22 @@ def hangman():
 
         if letter not in player_word:
             print("That letter doesn't appear in the word.")
+            attempts -= 1
 
         player_word = "".join(player_word)
         print()
-        attempts -= 1
 
         if player_word == secret_word:
             break
 
     print()
-    return print("Thanks for playing!")
 
-    # if player_word == secret_word:
-    #     return print("You survived!")
-    # else:
-    #     return print("You lost!")
+    if player_word == secret_word:
+        print(secret_word)
+        print("You guessed the word!")
+        return print("You survived!")
+    else:
+        return print("You lost!")
 
 
 hangman()
