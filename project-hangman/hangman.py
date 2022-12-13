@@ -7,66 +7,105 @@ def hangman():
         H A N G M A N
         """
     )
+    won = 0
+    lost = 0
+    lets_play = input(
+        """
+        Type "play" to play the game,
+        "results" to show the scoreboard,
+        and "exit" to quit:
+        """
+    )
 
-    words = ("python", "java", "swift", "javascript")
+    if lets_play == "exit":
+        return None
 
-    secret_word = random.choice(words)
+    while lets_play == "play" or lets_play == "results":
 
-    player_word = ""
+        if lets_play == "results":
+            print(f"You won: {won} times")
+            print(f"You lost: {lost} times")
+            lets_play = input(
+                """
+                Type "play" to play the game,
+                "results" to show the scoreboard,
+                and "exit" to quit:
+                """
+            )
 
-    guessed_letters = ''
+        words = ("python", "java", "swift", "javascript")
 
-    for _ in range(len(secret_word)):
-        player_word += "-"
+        secret_word = random.choice(words)
 
-    attempts = 8
+        player_word = ""
 
-    while attempts != 0:
+        guessed_letters = ""
 
-        print(player_word)
-        letter = input("Input a letter: ")
+        for _ in range(len(secret_word)):
+            player_word += "-"
 
-        if len(letter) > 1 or len(letter) == 0:
-            print('Please, input a single letter.')
-            continue
+        attempts = 8
 
-        if not letter.islower() or not letter.isalpha() :
-            print('Please, enter a lowercase letter from the English alphabet.')
-            continue
+        while attempts != 0:
 
-        if letter in player_word:
-            print("You've already guessed this letter")
-            continue
-            
-        if letter in guessed_letters and letter not in player_word:
-            print("You've already guessed this letter")
-            continue
+            print(player_word)
+            letter = input("Input a letter: ")
 
-        player_word = list(player_word)
+            if len(letter) > 1 or len(letter) == 0:
+                print("Please, input a single letter.")
+                continue
 
-        for i in range(len(secret_word)):
-            if letter == secret_word[i]:
-                player_word[i] = letter
+            if not letter.islower() or not letter.isalpha():
+                print(
+                    """
+                    Please, enter a lowercase letter
+                    from the English alphabet.
+                    """
+                )
+                continue
 
-        if letter not in player_word:
-            print("That letter doesn't appear in the word.")
-            attempts -= 1
+            if letter in player_word:
+                print("You've already guessed this letter")
+                continue
 
-        player_word = "".join(player_word)
-        guessed_letters += letter
+            if letter in guessed_letters and letter not in player_word:
+                print("You've already guessed this letter")
+                continue
+
+            player_word = list(player_word)
+
+            for i in range(len(secret_word)):
+                if letter == secret_word[i]:
+                    player_word[i] = letter
+
+            if letter not in player_word:
+                print("That letter doesn't appear in the word.")
+                attempts -= 1
+
+            player_word = "".join(player_word)
+            guessed_letters += letter
+            print()
+
+            if player_word == secret_word:
+                break
+
         print()
 
         if player_word == secret_word:
-            break
+            won += 1
+            print(secret_word)
+            print(f"You guessed the word {secret_word}!")
+            print("You survived!")
+        else:
+            lost += 1
+            print("You lost!")
 
-    print()
-
-    if player_word == secret_word:
-        print(secret_word)
-        print(f"You guessed the word {secret_word}!")
-        return print("You survived!")
-    else:
-        return print("You lost!")
+        lets_play = input(
+            '''
+            Type "play" to play the game,
+            "results" to show the scoreboard,
+            and "exit" to quit: '''
+        )
 
 
 hangman()
